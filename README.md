@@ -26,6 +26,7 @@ Evaluated to -0.40
 
 * Support antisymmetrization
 * Compute determinants
+* Reduction of multiple equivalent basis elements
 * Grassmann algebra
 * Common practical applications
 

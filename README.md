@@ -1,5 +1,5 @@
 # tensorlib
-a tensor operations library
+A tensor operations library. Work in progress.
 
 ### Run
 

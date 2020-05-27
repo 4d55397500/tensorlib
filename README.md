@@ -24,7 +24,7 @@ Evaluated to -0.40
 
 ### To Do
 
-* Support antisymmetrization
+* Support antisymmetrization & symmetrization
 * Compute determinants
 * Reduction of multiple equivalent basis elements
 * Grassmann algebra

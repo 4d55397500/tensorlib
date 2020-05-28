@@ -7,9 +7,6 @@
 #define MAXTERMS 1000
 #define MAXDIM 20
 
-struct determinant {
-
-};
 
 struct elt {
     int k; // non-zero index
@@ -93,8 +90,6 @@ struct tensor* addterms(struct term* tm1, struct term* tm2) {
 }
 
 
-
-
 struct term* termalloc(struct elt* elts, int rank, double coeff) {
     for (int i = 0; i < rank - 1; i++) {
         if (elts[i].n != elts[i+1].n) return NULL;
@@ -154,7 +149,6 @@ struct term* termperms(struct term* tm, int antisym) {
         if (antisym) perms[l].coeff *= sgn;
         sgn *= -1;
         l++;
-        //printf("\n");
         int k = n - 1;
         while (p[k-1] >= p[k]) {
             if (--k == 0) stop = 1;
@@ -198,13 +192,13 @@ struct tensor* tensorperms(struct tensor *t, int antisym) {
 }
 
 struct tensor *symmetrize(struct tensor *t) {
+    printf("Symmetrizing tensor...\n");
     return tensorperms(t, 0);
 }
 
 struct tensor *antisymmetrize(struct tensor *t) {
     return tensorperms(t, 1);
 }
-
 
 void printtensor(struct tensor* t) {
     printf("Tensor with %d terms:\n---\n", t->nterms);
@@ -213,6 +207,9 @@ void printtensor(struct tensor* t) {
         printterm(&t->terms[i]);
     }
 }
+
+
+
 
 // pairwise outerproduct
 struct term* pairproduct(struct elt* elt1, struct elt* elt2, int coeff) {
@@ -229,9 +226,10 @@ double evaluateterm(struct term* tm, struct inpt* ipt) {
     int i;
     for (int j = 0; j < tm->rank; j++) {
         i = tm->elts[j].k;
-        elterm = tm->coeff * ipt->x[i][j];
+        elterm = ipt->x[i][j];
         termresult *= elterm;
     }
+    termresult *= tm->coeff;
     return termresult;
 }
 
@@ -245,6 +243,29 @@ double evaluate(struct tensor* t, struct inpt* ipt) {
     printf("Evaluated to %.2f\n", result);
     return result;
 }
+
+double determinant(struct inpt* ipt) {
+    printf("Computing determinant by passing the following input to antisymmetric unit tensor...\n");
+    int n = ipt->n;
+    struct elt* el = (struct elt *) malloc(sizeof(struct elt) * n);
+
+    for (int i = 0; i < n; i++) {
+        el[i] = *eltalloc(i, n);
+    }
+    struct term* tm = termalloc(el, n, 1);
+
+    struct tensor* dmtensor = antisymmetrize(tensalloc(tm, 1));
+    for (int i = 0; i < dmtensor-> nterms; i++) {
+        dmtensor->terms[i].coeff = 2. * (((i+1) % 2) - 0.5);
+    }
+    printtensor(dmtensor);
+    double det = evaluate(dmtensor, ipt);
+
+    printf("Computed a determinant of %.2f\n", det);
+    return det;
+
+}
+
 
 
 int eltcalc(struct elt* el, int l) {
@@ -264,7 +285,7 @@ int main() {
     printtensor(t);
 
     const double x[3][2] = {
-            {0.1, 0.3},
+            {0.7, 0.3},
             {-0.4, -0.2},
             {0.5, 0.2}
     };
@@ -275,6 +296,14 @@ int main() {
     struct tensor* symt = symmetrize(t);
     printtensor(symt);
 
+
+    const double x2[3][3] = {
+            {1., 1., 0.4},
+            {1., .5, 0.1},
+            {0.7, 0.4, 0.4}
+    };
+    struct inpt* ipt2 = inptalloc(x2, 3, 3);
+    determinant(ipt2);
 
     return 0;
 }

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.12)
 project(tensorlib C)
 
 set(CMAKE_C_STANDARD 99)

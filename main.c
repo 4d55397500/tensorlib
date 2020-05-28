@@ -4,7 +4,7 @@
 #include "string.h"
 
 #define MAXRANK 100
-#define MAXTERMS 50
+#define MAXTERMS 1000
 #define MAXDIM 20
 
 struct determinant {
@@ -92,6 +92,15 @@ struct tensor* addterms(struct term* tm1, struct term* tm2) {
     return tensalloc(terms, 2);
 }
 
+struct tensor* symmetrize(struct tensor* t) {
+    for (int k = 0; k < t->nterms; k++) {
+        // add all permutations of the given term to the terms array for the tensor
+    }
+    return t;
+}
+
+
+
 struct term* termalloc(struct elt* elts, int rank, int coeff) {
     for (int i = 0; i < rank - 1; i++) {
         if (elts[i].n != elts[i+1].n) return NULL;
@@ -103,6 +112,99 @@ struct term* termalloc(struct elt* elts, int rank, int coeff) {
     memcpy(tm->elts, elts, sizeof(struct elt) * tm->rank);
     return tm;
 }
+
+void swap(int *p, int i, int j) {
+    int tmp = p[i];
+    p[i] = p[j];
+    p[j] = tmp;
+}
+
+// reverse array between given indices
+void reverse(int *p, int i, int j) {
+    while (i < j) {
+        swap(p, i, j);
+        i++;
+        j--;
+    }
+}
+
+int factorial(int n) {
+    int i = 0;
+    int r = 1;
+    while (++i < n) {
+        r *= r + 1;
+    }
+    return r;
+}
+
+struct term* termpermute(struct term* tm, const int *permutation) {
+    struct elt* elts = (struct elt*) malloc(sizeof(struct elt) * tm->rank);
+    for (int l = 0; l < tm->rank; l++) elts[l] = tm->elts[permutation[l]];
+    return termalloc(elts, tm->rank, tm->coeff);
+}
+
+
+struct term* termperms(struct term* tm) {
+    int nperms = factorial(tm->rank);
+    int n = tm->rank;
+    struct term *perms = (struct term *) malloc(sizeof(struct term) * nperms);
+    int p[nperms];
+    for (int i= 0; i < tm->rank; i++) p[i] = i;
+    int stop = 0;
+    int l = 0;
+    while (1) {
+//        for (int i = 0; i < n; i++) {
+//            printf("%d ", p[i]);
+//        }
+        perms[l] = *termpermute(tm, p);
+        l++;
+        printf("\n");
+        int k = n - 1;
+        while (p[k-1] >= p[k]) {
+            if (--k == 0) stop = 1;
+        }
+        if (stop) break;
+        int j = n - 1;
+        while (j > k && p[j] <= p[k - 1]) j--;
+        swap(p, k - 1, j);
+        reverse(p, k, n - 1);
+    }
+    return perms;
+}
+
+void permutations(int *p, int n) {
+    int stop = 0;
+    while (1) {
+        for (int i = 0; i < n; i++) {
+            printf("%d ", p[i]);
+        }
+        printf("\n");
+        int k = n - 1;
+        while (p[k-1] >= p[k]) {
+            if (--k == 0) stop = 1;
+        }
+        if (stop) break;
+        int j = n - 1;
+        while (j > k && p[j] <= p[k - 1]) j--;
+        swap(p, k - 1, j);
+        reverse(p, k, n - 1);
+    }
+}
+
+
+// permute (swap) the tensor term at the given indices i, j
+struct term* termswap(struct term* tm, int i, int j) {
+    if (i >= tm->rank || j >= tm->rank) return NULL;
+    struct elt* elts = (struct elt*) malloc(sizeof(struct elt) * tm->rank);
+    for (int l = 0; l < tm->rank; l++) {
+        elts[l] = tm->elts[l];
+    }
+    struct elt tmp = elts[i];
+    elts[i] = elts[j];
+    elts[j] = tmp;
+    return termalloc(elts, tm->rank, tm->coeff);
+}
+
 
 void printterm(struct term* tm) {
     struct elt el;
@@ -165,22 +267,30 @@ int main() {
     struct elt* elt1 = eltalloc(1, 3);
     struct elt* elt2 = eltalloc(2, 3);
     struct term* eltp1 = pairproduct(elt1, elt2, 1);
+//
+//    struct elt *elt3 = eltalloc(0, 3);
+//    struct elt* elt4 = eltalloc(1, 3);
+//    struct term* eltp2 = pairproduct(elt3, elt4, -4);
+//
+//    struct tensor* t = addterms(eltp1, eltp2);
+//    printtensor(t);
+//
+//    const double x[3][2] = {
+//            {0.1, 0.3},
+//            {-0.4, -0.2},
+//            {0.5, 0.2}
+//    };
+//    struct inpt* ipt = inptalloc(x, 2, 3);
+//
+//    evaluate(t, ipt);
 
-    struct elt *elt3 = eltalloc(0, 3);
-    struct elt* elt4 = eltalloc(1, 3);
-    struct term* eltp2 = pairproduct(elt3, elt4, -4);
+//    int p[2] = {0, 1};
+//    permutations(p, 2);
 
-    struct tensor* t = addterms(eltp1, eltp2);
-    printtensor(t);
-
-    double x[3][2] = {
-            {0.1, 0.3},
-            {-0.4, -0.2},
-            {0.5, 0.2}
-    };
-    struct inpt* ipt = inptalloc(x, 2, 3);
-
-    evaluate(t, ipt);
+    struct term* perms = termperms(eltp1);
+    for (int i = 0; i < 2; i++) {
+        printterm(&perms[i]);
+    }
 
     return 0;
 }

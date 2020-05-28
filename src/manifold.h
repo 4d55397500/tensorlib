@@ -8,8 +8,8 @@ typedef struct {
     // boolean function defining whether
     // the given point is on the manifold
     int (*ispoint)(struct point *);
-} manifold;
+} Manifold;
 
-manifold *makeUnitSphere(int);
+Manifold *makeUnitSphere(int);
 
 #endif //TENSORLIB_MANIFOLD_H

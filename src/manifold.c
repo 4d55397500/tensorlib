@@ -14,8 +14,8 @@ int isSpherePoint(struct point *pnt) {
     return 0;
 }
 
-manifold *makeUnitSphere(int d) {
-    manifold *mfold = (manifold*) malloc(sizeof(manifold));
+Manifold *makeUnitSphere(int d) {
+    Manifold *mfold = (Manifold*) malloc(sizeof(Manifold));
     mfold->d = d;
     mfold->ispoint = &isSpherePoint;
     return mfold;

@@ -24,7 +24,7 @@ Evaluated to -0.40
 
 ### To Do
 
-* Support antisymmetrization & symmetrization
+* <s>Support antisymmetrization & symmetrization</s>
 * Compute determinants
 * Support spaces and tensor fields on those spaces
 * Reduction of multiple equivalent basis elements

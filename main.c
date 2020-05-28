@@ -59,7 +59,7 @@ struct term {
     struct elt elts[MAXRANK];
     int rank;
     int n; // dim
-    int coeff; // a possible coefficient
+    double coeff; // a possible coefficient
 };
 
 struct tensor {
@@ -92,16 +92,10 @@ struct tensor* addterms(struct term* tm1, struct term* tm2) {
     return tensalloc(terms, 2);
 }
 
-struct tensor* symmetrize(struct tensor* t) {
-    for (int k = 0; k < t->nterms; k++) {
-        // add all permutations of the given term to the terms array for the tensor
-    }
-    return t;
-}
 
 
 
-struct term* termalloc(struct elt* elts, int rank, int coeff) {
+struct term* termalloc(struct elt* elts, int rank, double coeff) {
     for (int i = 0; i < rank - 1; i++) {
         if (elts[i].n != elts[i+1].n) return NULL;
     }
@@ -144,7 +138,8 @@ struct term* termpermute(struct term* tm, const int *permutation) {
 }
 
 
-struct term* termperms(struct term* tm) {
+// all permutations, each with 1/rank! coeff factor
+struct term* termperms(struct term* tm, int antisym) {
     int nperms = factorial(tm->rank);
     int n = tm->rank;
     struct term *perms = (struct term *) malloc(sizeof(struct term) * nperms);
@@ -152,13 +147,14 @@ struct term* termperms(struct term* tm) {
     for (int i= 0; i < tm->rank; i++) p[i] = i;
     int stop = 0;
     int l = 0;
+    int sgn = 1;
     while (1) {
-//        for (int i = 0; i < n; i++) {
-//            printf("%d ", p[i]);
-//        }
         perms[l] = *termpermute(tm, p);
+        perms[l].coeff = tm->coeff * 1. / nperms;
+        if (antisym) perms[l].coeff *= sgn;
+        sgn *= -1;
         l++;
-        printf("\n");
+        //printf("\n");
         int k = n - 1;
         while (p[k-1] >= p[k]) {
             if (--k == 0) stop = 1;
@@ -172,49 +168,41 @@ struct term* termperms(struct term* tm) {
     return perms;
 }
 
-void permutations(int *p, int n) {
-    int stop = 0;
-    while (1) {
-        for (int i = 0; i < n; i++) {
-            printf("%d ", p[i]);
-        }
-        printf("\n");
-        int k = n - 1;
-        while (p[k-1] >= p[k]) {
-            if (--k == 0) stop = 1;
-        }
-        if (stop) break;
-        int j = n - 1;
-        while (j > k && p[j] <= p[k - 1]) j--;
-        swap(p, k - 1, j);
-        reverse(p, k, n - 1);
-    }
-}
-
-
-// permute (swap) the tensor term at the given indices i, j
-struct term* termswap(struct term* tm, int i, int j) {
-    if (i >= tm->rank || j >= tm->rank) return NULL;
-    struct elt* elts = (struct elt*) malloc(sizeof(struct elt) * tm->rank);
-    for (int l = 0; l < tm->rank; l++) {
-        elts[l] = tm->elts[l];
-    }
-    struct elt tmp = elts[i];
-    elts[i] = elts[j];
-    elts[j] = tmp;
-    return termalloc(elts, tm->rank, tm->coeff);
-}
 
 
 void printterm(struct term* tm) {
     struct elt el;
-    printf("(tensor term)|dim: %d|rank: %d|coeff: %+d|elementary tensors:", tm->n, tm->rank,
-            tm->coeff);
+    printf("(tensor term)|dim: %d|rank: %d|coeff: %+.2f|elementary tensors:", tm->n, tm->rank,
+           tm->coeff);
     for (int i = 0; i < tm->rank; i++) {
         el = tm->elts[i];
         printf(" %d", el.k);
     }
     printf("|\n");
+}
+
+
+struct tensor* tensorperms(struct tensor *t, int antisym) {
+    struct term* perms;
+    int m = factorial(t->rank);
+    int nterms = t->nterms * m;
+    struct term* allterms = (struct term *) malloc(sizeof(struct term) * nterms);
+    for (int k = 0; k < t->nterms; k++) {
+        // add all permutations of the given term to the terms array for the tensor
+        perms = termperms(&t->terms[k], antisym);
+        for (int l = 0; l < m; l++) {
+            allterms[k * m + l] = perms[l];
+        }
+    }
+    return tensalloc(allterms, nterms);
+}
+
+struct tensor *symmetrize(struct tensor *t) {
+    return tensorperms(t, 0);
+}
+
+struct tensor *antisymmetrize(struct tensor *t) {
+    return tensorperms(t, 1);
 }
 
 
@@ -267,30 +255,26 @@ int main() {
     struct elt* elt1 = eltalloc(1, 3);
     struct elt* elt2 = eltalloc(2, 3);
     struct term* eltp1 = pairproduct(elt1, elt2, 1);
-//
-//    struct elt *elt3 = eltalloc(0, 3);
-//    struct elt* elt4 = eltalloc(1, 3);
-//    struct term* eltp2 = pairproduct(elt3, elt4, -4);
-//
-//    struct tensor* t = addterms(eltp1, eltp2);
-//    printtensor(t);
-//
-//    const double x[3][2] = {
-//            {0.1, 0.3},
-//            {-0.4, -0.2},
-//            {0.5, 0.2}
-//    };
-//    struct inpt* ipt = inptalloc(x, 2, 3);
-//
-//    evaluate(t, ipt);
 
-//    int p[2] = {0, 1};
-//    permutations(p, 2);
+    struct elt *elt3 = eltalloc(0, 3);
+    struct elt* elt4 = eltalloc(1, 3);
+    struct term* eltp2 = pairproduct(elt3, elt4, -4);
 
-    struct term* perms = termperms(eltp1);
-    for (int i = 0; i < 2; i++) {
-        printterm(&perms[i]);
-    }
+    struct tensor* t = addterms(eltp1, eltp2);
+    printtensor(t);
+
+    const double x[3][2] = {
+            {0.1, 0.3},
+            {-0.4, -0.2},
+            {0.5, 0.2}
+    };
+    struct inpt* ipt = inptalloc(x, 2, 3);
+
+    evaluate(t, ipt);
+
+    struct tensor* symt = symmetrize(t);
+    printtensor(symt);
+
 
     return 0;
 }

@@ -1,7 +1,20 @@
 # tensorlib
 A tensor operations library. Work in progress.
 
-### Run
+### Docs
+
+Proper docs to be written.
+
+### Design
+
+Structs defined
+
+* elt: an elementary 1d tensor `e_i`
+* term: a higher rank tensor element, `c * e_i e_j e_k...`
+* tensor: an arbitrary higher rank tensor, a sum of terms
+* point: an array of double of fixed length
+* manifold: a function returning if a given point is on the manifold
+* tensor field: a function from a point on the manifold to a tensor
 
 Run the main program. Currently, supports creation of elementary unit tensors, their outer product and sum to create higher rank tensors, evaluation on a collection of vectors, symmetrization and antisymmetrization, 
 and determinant calculation from the fully antisymmetric unit tensor.
@@ -9,7 +22,6 @@ and determinant calculation from the fully antisymmetric unit tensor.
 A sample run:
 
 ```
-
 Tensor with 2 terms:
 ---
 	(tensor term)|dim: 3|rank: 2|coeff: +1.00|elementary tensors: 1 2|

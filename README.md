@@ -3,7 +3,7 @@ A tensor operations library. Work in progress.
 
 ### Docs
 
-Proper docs to be written.
+Proper docs to be written. As mentioned in an issue will try to use [Hawkmoth](https://hawkmoth.readthedocs.io/en/latest/).
 
 ### Design
 

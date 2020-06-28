@@ -3,7 +3,7 @@ A tensor operations library. Work in progress.
 
 ### Background and Scope
 
-This is intended to be a library for operations with tensors. Not 'tensors' as restricted to neural network libraries, but multi-linear maps, tensor fields,
+This is intended to be a library for operations with tensors. Not 'tensors' as multi-dimensional arrays restricted to neural network libraries, but multi-linear maps, tensor fields,
 metrics, symplectic forms, all residing on manifolds, with common and (yes, potentially) practical applications to computational geometry, cryptography, machine learning, physical simulation etc.
 
 ### Docs

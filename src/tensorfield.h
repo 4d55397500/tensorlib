@@ -8,7 +8,7 @@
 typedef struct {
     Manifold *mfold; // a tensor field is defined on a manifold
     // a tensor field takes a tensor value at each point on the manifold
-    struct tensor *(*evaluate)(struct point *);
+    struct tensor *(*tensorAtPoint)(struct point *);
 } Tensorfield;
 
 #endif //TENSORLIB_TENSORFIELD_H

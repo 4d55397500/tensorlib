@@ -48,7 +48,7 @@ struct tensor *euclideanTensor(struct point* pnt) {
 Tensorfield *makeMetric(Manifold *mfold) {
     Tensorfield *metric = (Tensorfield*) malloc(sizeof(Tensorfield));
     metric->mfold = mfold;
-    metric->evaluate = &euclideanTensor;
+    metric->tensorAtPoint = &euclideanTensor;
     return metric;
 }
 
@@ -60,13 +60,23 @@ struct point *curveFunction(double x) {
 }
 
 void exampleCurveLength() {
+
     printf("-------------------------\n\n");
     printf("Running example computing curve length in R^2 for f(x) = x^2 from x = 0 to x = 1 ... \n");
+
     Manifold *plane = makePlane(2);
     Curve *curve = (Curve*) malloc(sizeof(Curve));
     curve->a = 0.0;
     curve->b = 1.0;
     curve->mfold = plane;
     curve->mp = &curveFunction;
+
+    Tensorfield *euclidean = makeMetric(plane);
+
+    double length = curveLength(curve, euclidean);
+    printf("-----------------------\n");
+    printf("Computed curve length of %.2f in R^2 for f(x) = x^2 from x = 0 to x = 1. \n", length);
+    printf("Approximates analytical expression of integral of sqrt(1+4x^2) from 0 to 1 ~ 1.4789\n");
+
 }
 

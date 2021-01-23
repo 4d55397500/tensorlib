@@ -26,6 +26,10 @@ Structs defined
 Currently, supports creation of elementary unit tensors, their outer product and sum to create higher rank tensors, evaluation on a collection of vectors, symmetrization and antisymmetrization, 
 and determinant calculation from the fully antisymmetric unit tensor.
 
+Additionally computes the length of a given curve in a manifold
+in terms of a given metric (symmetric 2-tensor) by approximating the Riemann sum of the integral `integral(sqrt(g(gamma dot, gamma dot)))`.
+
+
 ### Use
 
 Practical applications intended and tbd.
@@ -68,6 +72,10 @@ Input of 3 vectors each of dim 3:
 Evaluating tensor on input...
 Evaluated to 0.33
 Computed a determinant of 0.33
+...
+-----------------------
+Computed curve length of 1.48 in R^2 for f(x) = x^2 from x = 0 to x = 1. 
+Approximates analytical expression of integral of sqrt(1+4x^2) from 0 to 1 ~ 1.4789
 ```
 
 ### To Do

@@ -37,6 +37,7 @@ int main() {
     struct inpt* ipt2 = inptalloc((const double *) x2, 3, 3);
     determinant(ipt2);
 
+
     exampleCurveLength();
 
     return 0;

@@ -1,6 +1,7 @@
 #include "point.h"
 #include "manifold.h"
 #include "tensorfield.h"
+#include "inpt.h"
 
 #ifndef TENSORLIB_CURVE_H
 #define TENSORLIB_CURVE_H
@@ -16,6 +17,6 @@ typedef struct {
 
 // a curve has a length corresponding
 // to a given metric on the manifold
-double length(Curve *curve, Tensorfield *metric);
+double curveLength(Curve *curve, Tensorfield *metric);
 
 #endif //TENSORLIB_CURVE_H

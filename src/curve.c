@@ -18,7 +18,6 @@ double curveLength(Curve *curve, Tensorfield *metric) {
     double riemannSm = 0.0;
 
     while (t < curve->b) {
-        printf("%.2f\n", t);
 
         pnt = curve->mp(t);
         nextPnt = curve->mp(t + stepSize);

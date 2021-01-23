@@ -14,13 +14,14 @@ Proper docs to be written. As mentioned in an issue will try to use [Hawkmoth](h
 
 Structs defined
 
+* `inpt`: a collection of input vectors 
 * `elt`: an elementary 1d tensor `e_i`
 * `term`: a higher rank tensor element, `c * e_i e_j e_k...`
 * `tensor`: an arbitrary higher rank tensor, a sum of terms
 * `point`: an array of double of fixed length
-* `manifold`: a function returning if a given point is on the manifold
-* `tensor field`: a function from a point on the manifold to a tensor
-* `curve`: a function from an interval of doubles to a point on a manifold
+* `Manifold`: a function returning if a given point is on the manifold
+* `Tensorfield`: a function from a point on the manifold to a tensor
+* `Curve`: a function from an interval of doubles to a point on a manifold
 
 ### Operations
 

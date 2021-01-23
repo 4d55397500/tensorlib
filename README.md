@@ -1,5 +1,5 @@
 # tensorlib
-A tensor and differential geometry library, wip.
+A tensor and differential geometry library, wip. [Accompanying Notes](https://www.redwrasse.io/notes/tensoralgorithms).
 
 ### Background and Scope
 
@@ -95,3 +95,4 @@ Approximates analytical expression of integral of sqrt(1+4x^2) from 0 to 1 ~ 1.4
 ### References
 
 * [Discrete Differential Geometry](https://www.cs.cmu.edu/~kmcrane/Projects/DGPDEC/paper.pdf)
+* [Notes](https://www.redwrasse.io/notes/tensoralgorithms)

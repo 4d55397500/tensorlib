@@ -1,6 +1,7 @@
 #include "elt.h"
 #include "term.h"
 #include "tensor.h"
+#include "euclideancurve.c"
 
 int main() {
 
@@ -8,7 +9,7 @@ int main() {
     struct elt* elt2 = eltalloc(2, 3);
     struct term* eltp1 = pairproduct(elt1, elt2, 1);
 
-    struct elt *elt3 = eltalloc(0, 3);
+    struct elt* elt3 = eltalloc(0, 3);
     struct elt* elt4 = eltalloc(1, 3);
     struct term* eltp2 = pairproduct(elt3, elt4, -4);
 
@@ -35,6 +36,8 @@ int main() {
     };
     struct inpt* ipt2 = inptalloc((const double *) x2, 3, 3);
     determinant(ipt2);
+
+    exampleCurveLength();
 
     return 0;
 }

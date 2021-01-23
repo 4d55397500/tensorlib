@@ -80,3 +80,6 @@ Computed a determinant of 0.33
 * Grassmann algebra
 * Common practical applications
 
+### References
+
+* [Discrete Differential Geometry](https://www.cs.cmu.edu/~kmcrane/Projects/DGPDEC/paper.pdf)

@@ -3,7 +3,7 @@ A tensor and differential geometry library, wip.
 
 ### Background and Scope
 
-Library for tensors and numerical differential geometry applications.
+Library for tensors (multilinear maps, not arbitrary arrays as used for say Tensorflow) and numerical differential geometry applications.
 Applications exist (to be included) in computational geometry, cryptography, machine learning, physical simulation. See reference book below for more.
 
 ### Docs
@@ -20,6 +20,7 @@ Structs defined
 * `point`: an array of double of fixed length
 * `manifold`: a function returning if a given point is on the manifold
 * `tensor field`: a function from a point on the manifold to a tensor
+* `curve`: a function from an interval of doubles to a point on a manifold
 
 ### Operations
 
@@ -30,9 +31,11 @@ Additionally computes the length of a given curve in a manifold
 in terms of a given metric (symmetric 2-tensor) by approximating the Riemann sum of the integral `integral(sqrt(g(gamma dot, gamma dot)))`.
 
 
+
 ### Use
 
 Practical applications intended and tbd.
+[As one example](src/euclideancurve.c) a distance is computed for a sample curve `f(x) = x^2` on the manifold `R^2` with Euclidean metric. 
 
 Running `main.c` demonstrates some of the available operations:
 

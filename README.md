@@ -75,7 +75,7 @@ Computed a determinant of 0.33
 
 * <s>Support antisymmetrization & symmetrization</s>
 * <s>Compute determinants</s>
-* Support spaces and tensor fields on those spaces
+* <s>Support spaces and tensor fields on those spaces</s>
 * Reduction of multiple equivalent basis elements
 * Grassmann algebra
 * Common practical applications

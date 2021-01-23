@@ -3,9 +3,8 @@ A tensor and differential geometry library, wip.
 
 ### Background and Scope
 
-Library for operations with tensors. Note these are tensors in the mathematical sense (multi-linear maps), not multi-dimensional arrays as found in Tensorflow, etc.
-
-Applications exist and to be included- some domains are computational geometry, cryptography, machine learning, physical simulation.
+Library for tensors and numerical differential geometry applications.
+Applications exist (to be included) in computational geometry, cryptography, machine learning, physical simulation. See reference book below for more.
 
 ### Docs
 

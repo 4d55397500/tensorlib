@@ -1,5 +1,5 @@
 # tensorlib
-A tensor operations library. Work in progress.
+A tensor and differential geometry library, wip.
 
 ### Background and Scope
 

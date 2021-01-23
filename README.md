@@ -3,8 +3,9 @@ A tensor operations library. Work in progress.
 
 ### Background and Scope
 
-Intended library for operations with tensors as multi-linear maps, tensor fields,
-metrics, symplectic forms, all residing on manifolds, with practical applications to computational geometry, cryptography, machine learning, physical simulation etc.
+Library for operations with tensors. Note these are tensors in the mathematical sense (multi-linear maps), not multi-dimensional arrays as found in Tensorflow, etc.
+
+Applications exist and to be included- some domains are computational geometry, cryptography, machine learning, physical simulation.
 
 ### Docs
 
@@ -14,17 +15,23 @@ Proper docs to be written. As mentioned in an issue will try to use [Hawkmoth](h
 
 Structs defined
 
-* elt: an elementary 1d tensor `e_i`
-* term: a higher rank tensor element, `c * e_i e_j e_k...`
-* tensor: an arbitrary higher rank tensor, a sum of terms
-* point: an array of double of fixed length
-* manifold: a function returning if a given point is on the manifold
-* tensor field: a function from a point on the manifold to a tensor
+* `elt`: an elementary 1d tensor `e_i`
+* `term`: a higher rank tensor element, `c * e_i e_j e_k...`
+* `tensor`: an arbitrary higher rank tensor, a sum of terms
+* `point`: an array of double of fixed length
+* `manifold`: a function returning if a given point is on the manifold
+* `tensor field`: a function from a point on the manifold to a tensor
 
-Run the main program. Currently, supports creation of elementary unit tensors, their outer product and sum to create higher rank tensors, evaluation on a collection of vectors, symmetrization and antisymmetrization, 
+### Operations
+
+Currently, supports creation of elementary unit tensors, their outer product and sum to create higher rank tensors, evaluation on a collection of vectors, symmetrization and antisymmetrization, 
 and determinant calculation from the fully antisymmetric unit tensor.
 
-A sample run:
+### Use
+
+Practical applications intended and tbd.
+
+Running `main.c` demonstrates some of the available operations:
 
 ```
 Tensor with 2 terms:

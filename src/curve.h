@@ -15,6 +15,8 @@ typedef struct {
     struct point* (*mp)(double);
 } Curve;
 
+Curve *curveAlloc(double, double, Manifold *, struct point* (*)(double));
+
 // a curve has a length corresponding
 // to a given metric on the manifold
 double curveLength(Curve *curve, Tensorfield *metric);

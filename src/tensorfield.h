@@ -11,4 +11,6 @@ typedef struct {
     struct tensor *(*tensorAtPoint)(struct point *);
 } Tensorfield;
 
+Tensorfield *tensorFieldAlloc(Manifold *, struct tensor *(*)(struct point *));
+
 #endif //TENSORLIB_TENSORFIELD_H

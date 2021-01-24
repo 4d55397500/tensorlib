@@ -38,7 +38,7 @@ in terms of a given metric (symmetric 2-tensor) by approximating the Riemann sum
 
 Applications forthcoming.
 
-[**As one example**](src/euclideancurve.c) a distance is computed for a sample curve `f(x) = x^2` on the manifold `R^2` with Euclidean metric. 
+[**As one example**](src/exampleCurve.c) a distance is computed for a sample curve `f(x) = x^2` on the manifold `R^2` with Euclidean metric. 
 
 Running `main.c` demonstrates some of the available operations:
 

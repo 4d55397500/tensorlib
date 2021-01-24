@@ -1,7 +1,7 @@
 #include "elt.h"
 #include "term.h"
 #include "tensor.h"
-#include "euclideancurve.c"
+#include "exampleCurve.c"
 
 int main() {
 

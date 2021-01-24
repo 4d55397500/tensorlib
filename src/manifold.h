@@ -10,6 +10,6 @@ typedef struct {
     int (*ispoint)(struct point *);
 } Manifold;
 
-Manifold *makeUnitSphere(int);
+Manifold *manimalloc(int, int (*)(struct point *));
 
 #endif //TENSORLIB_MANIFOLD_H

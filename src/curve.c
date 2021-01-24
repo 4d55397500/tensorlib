@@ -1,7 +1,19 @@
 #include <math.h>
+#include <stdlib.h>
 #include "curve.h"
 #include "stdio.h"
 #include "inpt.h"
+
+
+Curve *curveAlloc(double a, double b,
+        Manifold *mfold, struct point* (*mp)(double)) {
+    Curve *curve = (Curve *) malloc(sizeof(Curve));
+    curve->a = a;
+    curve->b = b;
+    curve->mfold = mfold;
+    curve->mp = mp;
+    return curve;
+}
 
 double curveLength(Curve *curve, Tensorfield *metric) {
 

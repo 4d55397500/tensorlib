@@ -1,5 +1,5 @@
 # tensorlib
-A tensor and differential geometry library, wip.   
+A tensor and differential geometry library. Work in progress.
 [**Accompanying Notes**](https://www.redwrasse.io/notes/tensoralgorithms).
 
 ### Background and Scope

@@ -1,15 +1,17 @@
 # tensorlib
-A tensor and differential geometry library. Work in progress.
-[**Accompanying Notes**](https://www.redwrasse.io/notes/tensoralgorithms).
+A tensor and differential geometry library. [**Accompanying Notes**](https://www.redwrasse.io/notes/tensoralgorithms).
+
+Work in progress. See the CMU book [referenced below](#references) for possible directions.
+
 
 ### Background and Scope
 
 Library for tensors (multilinear maps, not arbitrary arrays as used for say Tensorflow) and numerical differential geometry applications.
-Applications exist (to be included) in computational geometry, cryptography, machine learning, physical simulation. See reference book below for more.
+Applications (tbd) in computational geometry/computer graphics, cryptography, machine learning, physical simulation. 
 
 ### Docs
 
-Proper docs to be written. As mentioned in an issue will try to use [Hawkmoth](https://hawkmoth.readthedocs.io/en/latest/).
+These will be written eventually with [Hawkmoth](https://hawkmoth.readthedocs.io/en/latest/).
 
 ### Design
 
@@ -24,65 +26,70 @@ Structs defined
 * `Tensorfield`: a function from a point on the manifold to a tensor
 * `Curve`: a function from an interval of doubles to a point on a manifold
 
-### Operations
 
-Currently, supports creation of elementary unit tensors, their outer product and sum to create higher rank tensors, evaluation on a collection of vectors, symmetrization and antisymmetrization, 
-and determinant calculation from the fully antisymmetric unit tensor.
+### Example Uses
 
-Additionally computes the length of a given curve in a manifold
-in terms of a given metric (symmetric 2-tensor) by approximating the Riemann sum of the integral `integral(sqrt(g(gamma dot, gamma dot)))`.
+More applications forthcoming. The following can be run from `main.c`.
 
 
+Take the outer product of two elementary tensors `e_1 e_2`
 
-### Use
-
-Applications forthcoming.
-
-[**As one example**](src/exampleCurve.c) a distance is computed for a sample curve `f(x) = x^2` on the manifold `R^2` with Euclidean metric. 
-
-Running `main.c` demonstrates some of the available operations:
+```c
+struct elt* elt1 = eltalloc(1, 3);
+struct elt* elt2 = eltalloc(2, 3);
+struct term* eltp1 = pairproduct(elt1, elt2, 1);
 
 ```
-Tensor with 2 terms:
----
-	(tensor term)|dim: 3|rank: 2|coeff: +1.00|elementary tensors: 1 2|
-	(tensor term)|dim: 3|rank: 2|coeff: -4.00|elementary tensors: 0 1|
-Input of 2 vectors each of dim 3:
----
-	+0.70 +0.30 
-	-0.40 -0.20 
-	+0.50 +0.20 
-Evaluating tensor on input...
-Evaluated to 0.48
-Symmetrizing tensor...
-Tensor with 4 terms:
----
-	(tensor term)|dim: 3|rank: 2|coeff: +0.50|elementary tensors: 1 2|
-	(tensor term)|dim: 3|rank: 2|coeff: +0.50|elementary tensors: 2 1|
-	(tensor term)|dim: 3|rank: 2|coeff: -2.00|elementary tensors: 0 1|
-	(tensor term)|dim: 3|rank: 2|coeff: -2.00|elementary tensors: 1 0|
-Computing determinant by passing the following input to antisymmetric unit tensor...
-Tensor with 6 terms:
----
-	(tensor term)|dim: 3|rank: 3|coeff: +1.00|elementary tensors: 0 1 2|
-	(tensor term)|dim: 3|rank: 3|coeff: -1.00|elementary tensors: 0 2 1|
-	(tensor term)|dim: 3|rank: 3|coeff: +1.00|elementary tensors: 1 0 2|
-	(tensor term)|dim: 3|rank: 3|coeff: -1.00|elementary tensors: 1 2 0|
-	(tensor term)|dim: 3|rank: 3|coeff: +1.00|elementary tensors: 2 0 1|
-	(tensor term)|dim: 3|rank: 3|coeff: -1.00|elementary tensors: 2 1 0|
-Input of 3 vectors each of dim 3:
----
-	+1.00 +1.00 +0.40 
-	+1.00 +0.50 +0.10 
-	+0.70 +0.40 +0.40 
-Evaluating tensor on input...
-Evaluated to 0.33
-Computed a determinant of 0.33
-...
------------------------
-Computed curve length of 1.48 in R^2 for f(x) = x^2 from x = 0 to x = 1. 
-Approximates analytical expression of integral of sqrt(1+4x^2) from 0 to 1 ~ 1.4789
+
+Create a more complex tensor `T = e_1 e_2  - 4 e_0 e_1`
+
+```c
+struct elt* elt3 = eltalloc(0, 3);  
+struct elt* elt4 = eltalloc(1, 3);
+struct term* eltp2 = pairproduct(elt3, elt4, -4);
+struct tensor* t = addterms(eltp1, eltp2);
+
 ```
+
+Evaluate the tensor `t` on vectors `x`.
+
+```c
+const double x[3][2] = {
+            {0.7, 0.3},
+            {-0.4, -0.2},
+            {0.5, 0.2}
+};
+struct inpt* ipt = inptalloc((const double *) x, 2, 3);
+evaluate(t, ipt);
+
+```
+
+Symmetrize the tensor `t`.
+
+```c
+struct tensor* symt = symmetrize(t);
+
+```
+
+Calculate the determinant, implemented as antisymmetric product of elementary tensors, on vector `x2`.
+
+```c
+struct inpt* ipt2 = inptalloc((const double *) x2, 3, 3);
+determinant(ipt2);
+
+```
+
+Build the n-dim. plane as a `Manifold`, with Euclidean metric as a `Tensorfield`. Define a `Curve` as f(x) = x^2, and estimate its length by a Riemann sum.
+
+```c
+int d = 2;
+Manifold *plane = euclideanMFold(d);
+Curve *curve = curveAlloc(0.0, 1.0, plane, curveFunction);
+Tensorfield *metric = euclideanMetric(plane);
+double length = curveLength(curve, metric);
+
+```
+
 
 ### To Do
 

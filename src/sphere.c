@@ -17,3 +17,14 @@ int isSpherePoint(struct point *pnt) {
 Manifold *makeSphere(int d) {
     return manimalloc(d, &isSpherePoint);
 }
+
+// metric on n-sphere
+// need to convert euclidean to spherical coordinates
+// on unit n-sphere
+// or if can figure out a numerical pullback can
+// do this numerically starting with the euclidean metric
+// for R^n+1
+struct tensor *sphereMetricMap(struct point *pnt) {
+    return NULL;
+}
+

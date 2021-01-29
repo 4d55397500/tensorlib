@@ -1,7 +1,7 @@
 #include "elt.h"
 #include "term.h"
 #include "tensor.h"
-#include "exampleCurve.c"
+#include "examples.c"
 
 int main() {
 
@@ -38,7 +38,7 @@ int main() {
     determinant(ipt2);
 
 
-    exampleCurveLength();
+    curveInPlane();
 
     return 0;
 }

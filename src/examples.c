@@ -8,19 +8,19 @@
 // f(x) = x^2 as curve in R^2.
 // from x = 0 to x = 1.
 
-struct point *curveFunction(double x) {
+struct point *quadraticFunc(double x) {
     double out[2] = {x, x*x};
     struct point *pnt = pointalloc(out, 2);
     return pnt;
 }
 
-void exampleCurveLength() {
+void curveInPlane() {
 
     printf("-------------------------\n\n");
     printf("Running example computing curve length in R^2 for f(x) = x^2 from x = 0 to x = 1 ... \n");
     int d = 2;
     Manifold *plane = euclideanMFold(d);
-    Curve *curve = curveAlloc(0.0, 1.0, plane, curveFunction);
+    Curve *curve = curveAlloc(0.0, 1.0, plane, quadraticFunc);
     Tensorfield *metric = euclideanMetric(plane);
 
     double length = curveLength(curve, metric);

@@ -27,7 +27,8 @@ Structs defined
 
 ### Example Uses
 
-More applications forthcoming. The following can be run from `main.c`.
+More applications forthcoming. The following are run in [main.c](https://github.com/redwrasse/tensorlib/blob/master/src/main.c) 
+with examples written in [examples.c](https://github.com/redwrasse/tensorlib/blob/master/src/examples.c).
 
 
 Take the outer product of two elementary tensors `e_1 e_2`, forming a rank 2 tensor.
@@ -86,8 +87,41 @@ Curve *curve = curveAlloc(0.0, 1.0, plane, curveFunction);
 Tensorfield *metric = euclideanMetric(plane);
 double length = curveLength(curve, metric);
 
+...
+
+(printout)
+Computed curve length of 1.48 in R^2 for f(x) = x^2 from x = 0 to x = 1. 
+Approximates analytical expression of integral of sqrt(1+4x^2) from 0 to 1 ~ 1.4789
+
 ```
 
+
+Build an n-sphere and corresponding metric, and estimate the length along a curve given in spherical coordinates. This simple
+example is a half circle around the equator.
+
+```c
+
+//  curve on 2-sphere from phi = 0 to phi = pi
+// w/ theta set to pi (aka half circle around equator)
+struct point *simpleSpherePath(double x) {
+    double out[2] = {3.1415/2., x};
+    struct point *pnt = pointalloc(out, 2);
+    return pnt;
+}
+
+int d = 2;
+Manifold *sphere = sphereMFold(d);
+Curve *curve = curveAlloc(0.0, 3.14, sphere, simpleSpherePath);
+Tensorfield *metric = sphereMetric(sphere);
+double length = curveLength(curve, metric);
+
+...
+
+(printout)
+Computed curve length of 3.14 on 2-sphere from theta = 0 to theta = pi 
+Approximates expected length of a half-circle around the equator. 
+
+```
 
 ### To Do
 

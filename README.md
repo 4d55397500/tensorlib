@@ -1,5 +1,5 @@
 # tensorlib
-A tensor and differential geometry library.
+A tensor and differential geometry library. Work in progress.
 
 
 ### Background and Scope

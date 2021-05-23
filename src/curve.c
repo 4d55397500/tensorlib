@@ -35,11 +35,11 @@ double curveLength(Curve *curve, Tensorfield *metric) {
         nextPnt = curve->mp(t + stepSize);
         for (int i = 0; i < d; i ++) {
             // hack duplicate to feed to metric
-            curveVelocity[i][0] = (nextPnt->x[i] - pnt->x[i]) / stepSize;
-            curveVelocity[i][1] = (nextPnt->x[i] - pnt->x[i]) / stepSize;
+            curveVelocity[i][0] = (nextPnt->x[i] - pnt->x[i]) / stepSize; // gamma dot
+            curveVelocity[i][1] = (nextPnt->x[i] - pnt->x[i]) / stepSize; // gamma dot
 
         }
-        tsr = (metric->tensorAtPoint)(pnt);
+        tsr = (metric->tensorAtPoint)(pnt); // g
         ipt = inptalloc((const double *) curveVelocity, 2, d);
         riemannSm += sqrt(evaluate(tsr, ipt)) * stepSize; // sqrt(g(gamma dot, gamma dot)) * stepSize
         t += stepSize;

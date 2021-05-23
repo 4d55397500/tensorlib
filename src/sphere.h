@@ -1,10 +1,14 @@
 #include "manifold.h"
+#include "tensorfield.h"
 
 #ifndef TENSORLIB_SPHERE_H
 #define TENSORLIB_SPHERE_H
 
 
-Manifold *makeSphere(int);
+int isSpherePoint(struct point *);
+Manifold *sphereMFold(int);
+struct tensor *sphereMetricMap(struct point *);
+Tensorfield *sphereMetric(Manifold *);
 
 
 #endif //TENSORLIB_SPHERE_H

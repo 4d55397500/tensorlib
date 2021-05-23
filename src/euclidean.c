@@ -25,3 +25,5 @@ struct tensor *euclideanTensorMap(struct point *pnt) {
 Tensorfield *euclideanMetric(Manifold *mfold) {
     return tensorFieldAlloc(mfold, euclideanTensorMap);
 }
+
+

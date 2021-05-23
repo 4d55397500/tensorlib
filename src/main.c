@@ -39,6 +39,7 @@ int main() {
 
 
     curveInPlane();
+    curveOnSphere();
 
     return 0;
 }

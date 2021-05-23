@@ -1,10 +1,6 @@
 # tensorlib
 A tensor and differential geometry library.
 
-[**Accompanying Notes**](https://www.redwrasse.io/notes/tensoralgorithms).
-
-Work in progress. See the CMU book [referenced below](#references) for possible directions.
-
 
 ### Background and Scope
 

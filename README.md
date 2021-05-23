@@ -30,7 +30,7 @@ Structs defined
 More applications forthcoming. The following can be run from `main.c`.
 
 
-Take the outer product of two elementary tensors `e_1 e_2`
+Take the outer product of two elementary tensors `e_1 e_2`, forming a rank 2 tensor.
 
 ```c
 struct elt* elt1 = eltalloc(1, 3);
@@ -39,7 +39,7 @@ struct term* eltp1 = pairproduct(elt1, elt2, 1);
 
 ```
 
-Create a more complex tensor `T = e_1 e_2  - 4 e_0 e_1`
+Create a more complex rank 2 tensor `t = e_1 e_2  - 4 e_0 e_1`
 
 ```c
 struct elt* elt3 = eltalloc(0, 3);  

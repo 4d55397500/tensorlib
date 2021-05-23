@@ -6,7 +6,7 @@
 
 
 int isSpherePoint(struct point *);
-Manifold *makeSphere(int);
+Manifold *sphereMFold(int);
 struct tensor *sphereMetricMap(struct point *);
 Tensorfield *sphereMetric(Manifold *);
 

@@ -20,7 +20,7 @@ struct term* termalloc(struct elt* elts, int rank, double coeff) {
 }
 
 // pairwise outerproduct
-struct term* pairproduct(struct elt* elt1, struct elt* elt2, int coeff) {
+struct term* pairproduct(struct elt* elt1, struct elt* elt2, double coeff) {
     if (elt1->n != elt2->n) return NULL;
     struct elt* elts = (struct elt*) malloc(sizeof(struct elt) * 2);
     elts[0] = *elt1;

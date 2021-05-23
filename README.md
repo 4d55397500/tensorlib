@@ -24,6 +24,7 @@ Structs defined
 * `Tensorfield`: a function from a point on the manifold to a tensor
 * `Curve`: a function from an interval of doubles to a point on a manifold
 
+Currently supports a collection of tensor operations, as well as computing a curve length directly from the metric given a Riemannian manifold.
 
 ### Example Uses
 
